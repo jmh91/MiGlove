@@ -1,0 +1,101 @@
+Combined sensor code code2flow
+
+function on_interrupt('keyboard press'){
+  if(Recording started?){
+    Interrupt occurred = TRUE;
+    Close Arduino serial connection;
+    return;
+    }
+  else {
+    Do nothing;
+    return;
+  }
+}
+
+function on_interrupt('keyboard press'){
+  if(Recording Started?){
+    Interrupt occurred = TRUE;
+    Close Arduino serial connection;
+    return;
+    }
+  else {
+    Do nothing;
+    return;
+  }
+}
+
+
+function connect_to_Arduino(arduino){
+  if(Serial port busy?){
+    Close connection;
+    return;
+  }
+  else{
+    Do nothing;
+    return;
+  }
+  Wait 1 second;
+// Message delivered from Arduino to terminal
+  Establish connection to Arduino;
+  Wait 2 seconds;
+  return arduino;
+}
+
+function clear_arduino_input_buffer(arduino){
+  while(Arduino input buffer occupied?){
+    Flush input buffer;
+  }
+}
+ 
+function wait_for_input(arduino){
+  while(!User input detected?){
+    Wait for user input;
+  }
+  call clear_arduino_input_buffer(arduino);
+}
+
+function pad_data_arrays{
+  while(Insufficient data collected){
+    Append final value to each list for padding;
+  }
+}
+
+Start;
+Import libraries;
+//Includes iteration count, no. of data points per gesture and gesture number
+Initialise lists, variables and save paths;
+
+// Start of main loop
+while(k <= max_iterations){
+  call clear_input_buffer;
+  call connect_to_Arduino(arduino);
+  try{
+    call wait_for_input(arduino);
+    Recording started = True;
+    while (!Interrupt occurred?){
+      Read data from Arduino serial port;
+      Format, split and append values to data lists;
+      if (Sufficient data points for gesture captured?){
+        goto save_data;
+      }
+    }
+  }
+  // Exits early with user interrupt
+  catch(Keyboard Interrupt){  
+    call on_interrupt;
+    if(!Sufficient data points for gesture captured?){
+      call pad_data_arrays;
+    }
+  }
+  save_data:
+  Save gesture data to CSV file;
+  Save gesture data to MATLAB file;
+  k += 1;
+}
+if(Arduino serial port open?){
+  Close serial port;
+  End;
+}
+else{
+  End;
+}
