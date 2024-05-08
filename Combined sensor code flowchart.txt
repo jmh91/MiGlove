@@ -1,4 +1,4 @@
-Combined sensor code code2flow
+Combined sensor code code2flow flowchart
 
 function on_interrupt('keyboard press'){
   if(Recording started?){
