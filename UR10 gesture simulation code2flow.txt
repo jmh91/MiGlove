@@ -1,0 +1,79 @@
+function connect_to_simulator(){
+  Connect to Remote API server;
+  if (Connected successfully?){
+    return clientID;
+  }
+  else{
+    Exit with Error: ***"Could not connect"***;
+  }
+}
+
+function set_joint_positions(clientID, joint_handles, target_positions){
+  for (i=0;i < No. of joint handles; i++){
+    if (i < length of target_positions){
+      Set joint target position;
+      while (!Joint is within error margin of target?){
+        Get current joint position;
+        if(Is |current position - target position[i]| <0.5 ?){
+          Joint is within error margin;
+        }
+        Wait for 0.1s;
+      }
+    }
+    else return;
+  }
+  return;
+}
+
+
+
+function perform_hammering(){
+  Create vector of target positions;
+    //Move into position
+  call set_joint_positions(clientID, joint_handles, target_positions);
+  block(Performing 4 repetitions of the gesture){
+    for (i=0; i<4; i++){
+      Set new target position;
+      call set_joint_positions(clientID, joint_handles, target_positions);
+      Set new target position;
+      call set_joint_positions(clientID, joint_handles, target_positions);
+    }
+  Wait for 1s;
+  }
+}
+
+
+function return_to_initial_position(){
+  Set target positions to origin;
+  call set_joint_positions(clientID, joint_handles, target_positions);
+  call stop_simulation(clientID);
+  call disconnect_from_simulator(clientID);
+}
+
+
+block(**From live gesture recognition**){
+  loop:
+  .(Rest of code).;
+|Assign gesture by most popular prediction|;
+}
+call connect_to_simulator(clientID);
+call start_simulation(clientID);
+
+Get all joint handles from UR10;
+switch(What gesture was recognised?) {
+  //Same function structure for all **perform_gestures**
+  case Hammering:
+    call perform_hammering();
+    break;
+  case Sawing:
+    call perform_sawing();
+    break;
+  case Screwdriving:
+    call perform_screwdriving();
+  case No Gesture:
+    call perform_no_gesture();
+    break;
+}
+call return_to_initial_position();
+goto loop;
+
