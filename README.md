@@ -1,6 +1,6 @@
 # MiGlove README
 This README provides the necessary steps to install, configure, and run the MiGlove project for gesture recognition, both with and without CoppeliaSim.
-Can refer to the 'MiGlove_report.pdf' for further details and development decisions.
+Can refer to the `MiGlove_report.pdf` for further details and development decisions.
 
 ## Prerequisites
 1. Ensure **Python 3.0** or later is installed.
